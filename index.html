@@ -102,7 +102,7 @@
             transform: rotate(180deg);
         }
 
-        /* 水平スライドループアニメーション */
+        /* 水平スライドループアニメーション (ヒーロー用) */
         .hero-scroll-wrapper {
             position: absolute;
             inset: 0;
@@ -147,7 +147,7 @@
             display: flex;
             width: fit-content;
             /* 画像セットの幅分だけ移動させる */
-            animation: gallery-scroll 40s linear infinite;
+            animation: gallery-scroll 60s linear infinite;
         }
         .gallery-marquee-content:hover {
             animation-play-state: paused; /* ホバーで停止 */
@@ -172,6 +172,29 @@
         .gallery-item:hover {
             border-color: #d4af37;
             transform: scale(1.02);
+        }
+
+        /* Venueセクション用スライドショー */
+        .venue-slideshow-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            /* 1枚のサイクル：In(1s) + Stay(3s) + Out(1s) = 5秒 */
+            /* ただし、Out(1s)と次のIn(1s)をクロスフェードさせるため、実質間隔は4秒 */
+            /* 10枚あるので、合計サイクル 40秒 */
+            animation: venue-slideshow-anim 40s linear infinite;
+        }
+
+        @keyframes venue-slideshow-anim {
+            0% { opacity: 0; }
+            2.5% { opacity: 1; }   /* 1秒でフェードイン (1/40 = 2.5%) */
+            10% { opacity: 1; }    /* 3秒表示して、開始から4秒時点 (4/40 = 10%) */
+            12.5% { opacity: 0; }  /* 1秒でフェードアウトして、開始から5秒時点 (5/40 = 12.5%) */
+            100% { opacity: 0; }
         }
 
         /* スクロールバー */
@@ -472,35 +495,70 @@
                 <div class="flex">
                     <!-- Image 1 -->
                     <div class="gallery-item group">
-                        <img src="https://images.unsplash.com/photo-1552168324-d612d77725e3?auto=format&fit=crop&q=80&w=600" alt="Portrait" class="w-full h-full object-cover zoomable-image">
+                        <img src="images/gallery01.jpg" alt="Portrait" class="w-full h-full object-cover zoomable-image">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
                             <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
                         </div>
                     </div>
                     <!-- Image 2 -->
                     <div class="gallery-item group">
-                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=600" alt="Portrait" class="w-full h-full object-cover zoomable-image">
+                        <img src="images/gallery02.jpg" alt="Portrait" class="w-full h-full object-cover zoomable-image">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
                             <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
                         </div>
                     </div>
                     <!-- Image 3 -->
                     <div class="gallery-item group">
-                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=600" alt="Portrait" class="w-full h-full object-cover zoomable-image">
+                        <img src="images/gallery03.jpg" alt="Portrait" class="w-full h-full object-cover zoomable-image">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
                             <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
                         </div>
                     </div>
                     <!-- Image 4 -->
                     <div class="gallery-item group">
-                        <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&q=80&w=600" alt="Portrait" class="w-full h-full object-cover zoomable-image">
+                        <img src="images/gallery04.jpg" alt="Portrait" class="w-full h-full object-cover zoomable-image">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
                             <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
                         </div>
                     </div>
-                    <!-- Image 5 (Add more variety) -->
+                    <!-- Image 5 -->
                     <div class="gallery-item group">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=600" alt="Portrait" class="w-full h-full object-cover zoomable-image">
+                        <img src="images/gallery05.jpg" alt="Portrait" class="w-full h-full object-cover zoomable-image">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
+                            <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
+                        </div>
+                    </div>
+                    <!-- Image 6 -->
+                    <div class="gallery-item group">
+                        <img src="images/gallery06.jpg" alt="Portrait" class="w-full h-full object-cover zoomable-image">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
+                            <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
+                        </div>
+                    </div>
+                    <!-- Image 7 -->
+                    <div class="gallery-item group">
+                        <img src="images/gallery07.jpg" alt="Portrait" class="w-full h-full object-cover zoomable-image">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
+                            <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
+                        </div>
+                    </div>
+                    <!-- Image 8 -->
+                    <div class="gallery-item group">
+                        <img src="images/gallery08.jpg" alt="Portrait" class="w-full h-full object-cover zoomable-image">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
+                            <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
+                        </div>
+                    </div>
+                    <!-- Image 9 -->
+                    <div class="gallery-item group">
+                        <img src="images/gallery09.jpg" alt="Portrait" class="w-full h-full object-cover zoomable-image">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
+                            <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
+                        </div>
+                    </div>
+                    <!-- Image 10 -->
+                    <div class="gallery-item group">
+                        <img src="images/gallery10.jpg" alt="Portrait" class="w-full h-full object-cover zoomable-image">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
                             <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
                         </div>
@@ -509,32 +567,72 @@
 
                 <!-- 画像セット2 (ループ用複製: セット1と同じ内容) -->
                 <div class="flex">
+                    <!-- Image 1 -->
                     <div class="gallery-item group">
-                        <img src="https://images.unsplash.com/photo-1552168324-d612d77725e3?auto=format&fit=crop&q=80&w=600" alt="Portrait" class="w-full h-full object-cover zoomable-image">
+                        <img src="images/gallery01.jpg" alt="Portrait" class="w-full h-full object-cover zoomable-image">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
                             <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
                         </div>
                     </div>
+                    <!-- Image 2 -->
                     <div class="gallery-item group">
-                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=600" alt="Portrait" class="w-full h-full object-cover zoomable-image">
+                        <img src="images/gallery02.jpg" alt="Portrait" class="w-full h-full object-cover zoomable-image">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
                             <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
                         </div>
                     </div>
+                    <!-- Image 3 -->
                     <div class="gallery-item group">
-                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=600" alt="Portrait" class="w-full h-full object-cover zoomable-image">
+                        <img src="images/gallery03.jpg" alt="Portrait" class="w-full h-full object-cover zoomable-image">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
                             <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
                         </div>
                     </div>
+                    <!-- Image 4 -->
                     <div class="gallery-item group">
-                        <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&q=80&w=600" alt="Portrait" class="w-full h-full object-cover zoomable-image">
+                        <img src="images/gallery04.jpg" alt="Portrait" class="w-full h-full object-cover zoomable-image">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
                             <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
                         </div>
                     </div>
+                    <!-- Image 5 -->
                     <div class="gallery-item group">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=600" alt="Portrait" class="w-full h-full object-cover zoomable-image">
+                        <img src="images/gallery05.jpg" alt="Portrait" class="w-full h-full object-cover zoomable-image">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
+                            <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
+                        </div>
+                    </div>
+                    <!-- Image 6 -->
+                    <div class="gallery-item group">
+                        <img src="images/gallery06.jpg" alt="Portrait" class="w-full h-full object-cover zoomable-image">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
+                            <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
+                        </div>
+                    </div>
+                    <!-- Image 7 -->
+                    <div class="gallery-item group">
+                        <img src="images/gallery07.jpg" alt="Portrait" class="w-full h-full object-cover zoomable-image">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
+                            <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
+                        </div>
+                    </div>
+                    <!-- Image 8 -->
+                    <div class="gallery-item group">
+                        <img src="images/gallery08.jpg" alt="Portrait" class="w-full h-full object-cover zoomable-image">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
+                            <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
+                        </div>
+                    </div>
+                    <!-- Image 9 -->
+                    <div class="gallery-item group">
+                        <img src="images/gallery09.jpg" alt="Portrait" class="w-full h-full object-cover zoomable-image">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
+                            <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
+                        </div>
+                    </div>
+                    <!-- Image 10 -->
+                    <div class="gallery-item group">
+                        <img src="images/gallery10.jpg" alt="Portrait" class="w-full h-full object-cover zoomable-image">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
                             <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
                         </div>
@@ -891,17 +989,33 @@
                     <div class="absolute inset-0 border-2 border-otaru-gold/30 rounded-2xl transform -rotate-2 group-hover:-rotate-1 transition duration-500"></div>
                     
                     <div class="relative bg-[#0d2331] rounded-2xl overflow-hidden shadow-2xl aspect-video border border-otaru-gold/50">
-                        <!-- ダミー画像（後ほど会場イメージに差し替えてください） -->
-                        <img 
-                            src="https://images.unsplash.com/photo-1518998053901-5348d3969105?auto=format&fit=crop&q=80&w=1000" 
-                            alt="Gallery Image" 
-                            class="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition duration-500 hover:scale-105"
-                        >
-                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                            <span class="bg-[#0d2331]/80 text-otaru-gold border border-otaru-gold px-6 py-3 rounded-full font-medieval tracking-widest backdrop-blur-sm">
+                        <!-- スライドショー画像 (place01.jpg ~ place10.jpg に変更) -->
+                        <img src="images/place01.jpg" alt="Venue Candidate 1" class="venue-slideshow-img" style="animation-delay: 0s;">
+                        <img src="images/place02.jpg" alt="Venue Candidate 2" class="venue-slideshow-img" style="animation-delay: 4s;">
+                        <img src="images/place03.jpg" alt="Venue Candidate 3" class="venue-slideshow-img" style="animation-delay: 8s;">
+                        <img src="images/place04.jpg" alt="Venue Candidate 4" class="venue-slideshow-img" style="animation-delay: 12s;">
+                        <img src="images/place05.jpg" alt="Venue Candidate 5" class="venue-slideshow-img" style="animation-delay: 16s;">
+                        <img src="images/place06.jpg" alt="Venue Candidate 6" class="venue-slideshow-img" style="animation-delay: 20s;">
+                        <img src="images/place07.jpg" alt="Venue Candidate 7" class="venue-slideshow-img" style="animation-delay: 24s;">
+                        <img src="images/place08.jpg" alt="Venue Candidate 8" class="venue-slideshow-img" style="animation-delay: 28s;">
+                        <img src="images/place09.jpg" alt="Venue Candidate 9" class="venue-slideshow-img" style="animation-delay: 32s;">
+                        <img src="images/place10.jpg" alt="Venue Candidate 10" class="venue-slideshow-img" style="animation-delay: 36s;">
+
+                        <!-- PLANNING... の文字は残すかどうか？ -->
+                        <!-- ユーザーの指示には「アニメーションとして」とあるので、画像を見せることが主目的。 -->
+                        <!-- PLANNING... は会場が未定であることを示す重要な要素なので、半透明で残すのが親切か。 -->
+                        <!-- 今回は画像の指示のみなので、PLANNING...も残しつつ、画像が見えるように背景透過を調整するか、あるいは削除するか。 -->
+                        <!-- 元のコードでは opacity-60 とかになっていた。 -->
+                        <!-- 今回は画像自体をスライドショーにするので、PLANNING... は前面に配置しておくのがデザイン的に統一感がある。 -->
+                        
+                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+                            <span class="bg-[#0d2331]/60 text-otaru-gold border border-otaru-gold px-6 py-3 rounded-full font-medieval tracking-widest backdrop-blur-sm shadow-lg">
                                 PLANNING...
                             </span>
                         </div>
+                        
+                        <!-- オーバーレイで少し暗くして文字を見やすくする -->
+                        <div class="absolute inset-0 bg-[#0d2331]/20 pointer-events-none"></div>
                     </div>
                 </div>
             </div>

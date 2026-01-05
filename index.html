@@ -10,13 +10,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Zen+Antique+Soft&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 
-    <!-- Tailwind CSS (デザイン用) -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons (アイコン用) -->
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <style>
-        /* フォント設定 */
+        /* --- フォント設定 --- */
         body {
             font-family: 'Zen Antique Soft', serif;
             -webkit-font-smoothing: antialiased;
@@ -36,24 +36,24 @@
             font-weight: 900;
         }
 
-        /* 小樽焼ブルー (Otaru Blue) */
+        /* --- カラー設定（小樽焼ブルー & 金継ぎゴールド） --- */
         .bg-otaru-dark {
             background-color: #0d2331; /* 深い藍色 */
         }
         .bg-otaru-main {
-            background: linear-gradient(160deg, #103b4a 0%, #0d2331 100%); /* 小樽焼の青緑 */
+            background: linear-gradient(160deg, #103b4a 0%, #0d2331 100%); /* 青緑グラデーション */
         }
         .text-otaru-gold {
-            color: #d4af37; /* 金継ぎゴールド */
+            color: #d4af37;
         }
         .border-otaru-gold {
             border-color: #d4af37;
         }
 
-        /* 金継ぎ装飾 (Kintsugi Effect) */
+        /* --- 金継ぎ背景装飾 (Kintsugi Effect) --- */
         .kintsugi-bg {
             position: relative;
-            overflow-x: hidden;
+            overflow-x: hidden; /* 横スクロール防止 */
             min-height: 100vh;
         }
         .kintsugi-bg::before {
@@ -63,13 +63,14 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* 金継ぎ風のひび割れパターン */
+            /* 金継ぎ風ひび割れパターン */
             background-image: url("data:image/svg+xml,%3Csvg width='400' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 50 Q 50 40 100 60 T 200 40 T 300 80 T 400 50 M 50 0 Q 60 50 40 100 T 80 200 T 50 300 T 90 400' stroke='rgba(212, 175, 55, 0.15)' stroke-width='1.5' fill='none'/%3E%3Cpath d='M200 0 Q 210 80 190 150 T 230 250 T 200 400' stroke='rgba(212, 175, 55, 0.1)' stroke-width='1' fill='none'/%3E%3C/svg%3E");
             pointer-events: none;
             z-index: 0;
         }
 
-        /* 金の輝きアニメーション */
+        /* --- アニメーション類 --- */
+        /* 金の輝き (Shine Effect) */
         @keyframes shine {
             0% { background-position: -100% 0; }
             100% { background-position: 200% 0; }
@@ -85,24 +86,11 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to right, transparent 0%, rgba(255, 215, 0, 0.3) 50%, transparent 100%);
-            animation: shine 4s infinite;
+            background: linear-gradient(to right, transparent 0%, rgba(255, 215, 0, 0.4) 50%, transparent 100%);
+            animation: shine 3s infinite; /* 少し早めて視認性アップ */
         }
 
-        /* アコーディオン */
-        .faq-content {
-            transition: max-height 0.3s ease-out;
-            max-height: 0;
-            overflow: hidden;
-        }
-        .faq-content.active {
-            max-height: 500px;
-        }
-        .rotate-180 {
-            transform: rotate(180deg);
-        }
-
-        /* 水平スライドループアニメーション (ヒーロー用) */
+        /* ヒーローセクション：水平スライドループ */
         .hero-scroll-wrapper {
             position: absolute;
             inset: 0;
@@ -110,47 +98,42 @@
             pointer-events: none;
             z-index: 1;
             opacity: 0.15;
-            mix-blend-mode: screen; /* 馴染ませる */
+            mix-blend-mode: screen;
             display: flex;
             align-items: center;
-            justify-content: flex-start;
         }
         .hero-scroll-content {
             display: flex;
-            /* 画像2枚分（幅の半分）を左から右へ移動させる */
             animation: scroll-left-to-right 60s linear infinite;
             width: fit-content;
         }
         .hero-scroll-content img {
-            height: 90vh; /* 画面高さの90%程度 */
+            height: 90vh;
             width: auto;
-            max-width: none; /* 縮小防止 */
+            max-width: none;
             flex-shrink: 0;
-            /* 1周した時に繋がるように画像を複製して並べる */
         }
         @keyframes scroll-left-to-right {
-            /* 左(-50%)から右(0%)へ移動することで、左から右へ流れるように見せる */
             0% { transform: translateX(-50%); }
             100% { transform: translateX(0%); }
         }
 
-        /* ギャラリー用無限スクロール (右から左へ) */
+        /* ギャラリー：無限スクロール (右から左へ) */
         .gallery-marquee-wrapper {
             width: 100%;
             overflow: hidden;
             position: relative;
             padding: 20px 0;
-            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); /* 両端をフェード */
-            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
         }
         .gallery-marquee-content {
             display: flex;
             width: fit-content;
-            /* 画像セットの幅分だけ移動させる */
             animation: gallery-scroll 60s linear infinite;
         }
         .gallery-marquee-content:hover {
-            animation-play-state: paused; /* ホバーで停止 */
+            animation-play-state: paused;
         }
         @keyframes gallery-scroll {
             0% { transform: translateX(0); }
@@ -167,14 +150,15 @@
             position: relative;
             background-color: #1e293b;
             cursor: pointer;
-            transition: border-color 0.3s, transform 0.3s;
+            transition: all 0.3s;
         }
         .gallery-item:hover {
             border-color: #d4af37;
             transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
         }
 
-        /* Venueセクション用スライドショー */
+        /* 会場候補：スライドショー */
         .venue-slideshow-img {
             position: absolute;
             top: 0;
@@ -183,20 +167,30 @@
             height: 100%;
             object-fit: cover;
             opacity: 0;
-            /* 1枚のサイクル：In(1s) + Stay(3s) + Out(1s) = 5秒 */
-            /* ただし、Out(1s)と次のIn(1s)をクロスフェードさせるため、実質間隔は4秒 */
-            /* 10枚あるので、合計サイクル 40秒 */
+            /* 10枚ループ (40秒) */
             animation: venue-slideshow-anim 40s linear infinite;
         }
-
         @keyframes venue-slideshow-anim {
             0% { opacity: 0; }
-            2.5% { opacity: 1; }   /* 1秒でフェードイン (1/40 = 2.5%) */
-            10% { opacity: 1; }    /* 3秒表示して、開始から4秒時点 (4/40 = 10%) */
-            12.5% { opacity: 0; }  /* 1秒でフェードアウトして、開始から5秒時点 (5/40 = 12.5%) */
+            2.5% { opacity: 1; }   /* 1秒 IN */
+            10% { opacity: 1; }    /* 3秒 STAY */
+            12.5% { opacity: 0; }  /* 1秒 OUT */
             100% { opacity: 0; }
         }
 
+        /* アコーディオン & その他 */
+        .faq-content {
+            transition: max-height 0.3s ease-out;
+            max-height: 0;
+            overflow: hidden;
+        }
+        .faq-content.active {
+            max-height: 500px;
+        }
+        .rotate-180 {
+            transform: rotate(180deg);
+        }
+        
         /* スクロールバー */
         ::-webkit-scrollbar {
             width: 8px;
@@ -212,7 +206,7 @@
 </head>
 <body class="bg-otaru-dark text-slate-200 selection:bg-yellow-600 selection:text-white kintsugi-bg">
 
-    <!-- 金継ぎラインオーバーレイ -->
+    <!-- 金継ぎラインオーバーレイ (固定背景) -->
     <div class="fixed inset-0 pointer-events-none z-0 opacity-40 mix-blend-overlay">
         <svg width="100%" height="100%" preserveAspectRatio="none">
             <path d="M0,100 Q300,150 500,50 T1000,200 T1500,100" stroke="#d4af37" stroke-width="0.5" fill="none" />
@@ -263,10 +257,9 @@
 
     <!-- ヒーローセクション -->
     <header class="relative pt-32 pb-16 md:pt-48 md:pb-32 px-6 overflow-hidden bg-otaru-main">
-        <!-- 追加: 水平スライドループ装飾 -->
+        <!-- 水平スライドループ装飾 -->
         <div class="hero-scroll-wrapper">
             <div class="hero-scroll-content">
-                <!-- 継ぎ目なくループさせるために画像を2つ並べる -->
                 <img src="images/1500images.png" alt="">
                 <img src="images/1500images.png" alt="">
             </div>
@@ -279,19 +272,21 @@
                         <span class="w-2 h-2 rounded-full bg-otaru-gold animate-pulse"></span>
                         RE-START PROJECT SINCE 2026
                     </div>
-                    <!-- Futuristic Font for Numbers with Gold Gradient -->
+                    
                     <h1 class="text-6xl sm:text-7xl lg:text-9xl font-futuristic leading-[0.9] mb-8 text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400 tracking-tight drop-shadow-lg">
                         1500<span class="text-otaru-gold text-4xl sm:text-5xl align-top ml-1 font-zen">人</span> <br/>
                         1500<span class="text-otaru-gold text-4xl sm:text-5xl align-top ml-1 font-zen">円</span> <br/>
                         15<span class="text-otaru-gold text-4xl sm:text-5xl align-top ml-1 font-zen">分</span>
                     </h1>
+                    
                     <p class="text-lg md:text-xl text-slate-300 mb-10 leading-relaxed font-medium max-w-lg font-zen border-l-2 border-otaru-gold pl-6">
                         「しみお、再始動。」<br/>
                         <span class="text-base block mt-2 font-normal font-zen text-slate-400">失われた時間を取り戻すための、<br class="hidden md:block"/>スナップポートレートの挑戦。<br/>あなたもこの物語の一部になりませんか？</span>
                     </p>
+                    
                     <div class="flex flex-col sm:flex-row gap-4">
-                        <!-- リンク先修正 -->
-                        <a href="https://dsl.theshop.jp/items/129792405" target="_blank" rel="noopener noreferrer" class="bg-gradient-to-br from-yellow-600 to-yellow-800 text-white border border-yellow-400/50 px-8 py-4 rounded-xl font-bold shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:brightness-110 hover:translate-y-[-2px] transition flex items-center justify-center gap-3 font-zen tracking-wide gold-shine">
+                        <!-- ボタン: 高視認性デザイン -->
+                        <a href="https://dsl.theshop.jp/items/129792405" target="_blank" rel="noopener noreferrer" class="bg-gradient-to-r from-yellow-700 via-yellow-600 to-yellow-800 text-white border-2 border-yellow-400/50 px-8 py-4 rounded-xl font-bold shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:brightness-110 hover:translate-y-[-2px] transition flex items-center justify-center gap-3 font-zen tracking-wide gold-shine">
                             <i data-lucide="ticket" class="w-5 h-5"></i>
                             参加チケット購入
                         </a>
@@ -302,7 +297,7 @@
                 </div>
                 
                 <div class="md:w-1/2 order-1 md:order-2 relative w-full max-w-md md:max-w-none mx-auto">
-                    <!-- 金継ぎ風の画像枠 -->
+                    <!-- 金継ぎ風画像枠 -->
                     <div class="relative rounded-[2rem] p-1 bg-gradient-to-br from-otaru-gold via-transparent to-otaru-gold shadow-2xl transform rotate-3 hover:rotate-0 transition duration-700">
                         <div class="absolute inset-0 bg-[#0d2331] rounded-[2rem] m-[2px]"></div>
                         <img 
@@ -310,7 +305,6 @@
                             alt="Portrait Session" 
                             class="rounded-[1.9rem] relative z-10 w-full object-cover aspect-[4/5] opacity-90 mix-blend-luminosity hover:mix-blend-normal transition duration-500"
                         >
-                        <!-- 金のひび割れオーバーレイ -->
                         <div class="absolute inset-0 z-20 pointer-events-none opacity-50">
                              <svg width="100%" height="100%" preserveAspectRatio="none">
                                 <path d="M0,300 L100,250 L200,350 L400,200" stroke="#d4af37" stroke-width="1" fill="none" />
@@ -332,14 +326,12 @@
             <div class="text-center mb-16">
                 <h2 class="text-5xl font-medieval mb-4 inline-block relative z-10 tracking-wide text-white">
                     <span class="relative z-10 drop-shadow-[0_2px_0_#000]">INTRODUCTION</span>
-                    <!-- 金継ぎライン -->
                     <span class="absolute bottom-2 left-[-20%] w-[140%] h-[2px] bg-otaru-gold transform -rotate-1 opacity-70"></span>
                 </h2>
                 <p class="text-otaru-gold font-bold tracking-widest text-sm font-zen mt-4">プロジェクトへの想い</p>
             </div>
             
             <div class="bg-[#103b4a]/60 backdrop-blur-sm p-8 md:p-12 rounded-3xl border border-otaru-gold/30 shadow-2xl leading-loose text-slate-300 relative overflow-hidden">
-                <!-- 装飾 -->
                 <div class="absolute top-0 right-0 w-20 h-20 border-t-2 border-r-2 border-otaru-gold rounded-tr-3xl opacity-50"></div>
                 <div class="absolute bottom-0 left-0 w-20 h-20 border-b-2 border-l-2 border-otaru-gold rounded-bl-3xl opacity-50"></div>
 
@@ -353,7 +345,7 @@
                         そこで始めようというのが、<br class="md:hidden"><strong class="text-otaru-gold font-medieval text-2xl tracking-wide mx-1 drop-shadow-md">1500 × 1500 PROJECT</strong>です。
                     </p>
                     
-                    <!-- 中央配置・フレキシブルフォント・折り返しなし -->
+                    <!-- 中央配置・フレキシブルフォント・スマホ調整済み -->
                     <div class="my-10 text-center w-full">
                         <p class="bg-[#0d2331] border border-otaru-gold px-4 py-4 rounded-xl font-bold text-white inline-block font-zen shadow-[0_0_15px_rgba(212,175,55,0.3)] leading-relaxed" style="font-size: clamp(0.7rem, 3.2vw, 1.8rem); white-space: nowrap;">
                             1500人分のスナップポートレートを撮り集める
@@ -386,90 +378,128 @@
 
     <!-- 参加フロー (Flow) -->
     <section id="flow" class="py-24 px-6 relative overflow-hidden bg-[#0a1b26]">
-        <div class="container mx-auto max-w-5xl relative z-10">
+        <div class="container mx-auto max-w-4xl relative z-10">
             <div class="text-center mb-20">
                 <span class="text-otaru-gold font-medieval tracking-widest text-xl block mb-2">HOW TO JOIN</span>
                 <h2 class="text-3xl md:text-4xl font-black font-zen tracking-wide text-white">参加までの流れ</h2>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Steps with Kintsugi borders -->
-                <div class="bg-[#103b4a]/40 backdrop-blur-sm border border-otaru-gold/20 p-8 rounded-2xl hover:bg-[#103b4a]/60 hover:border-otaru-gold/60 transition group relative">
-                    <div class="absolute -top-1 -right-1 w-4 h-4 border-t border-r border-otaru-gold"></div>
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="p-3 bg-[#0d2331] border border-otaru-gold rounded-lg text-otaru-gold group-hover:scale-110 transition duration-300">
-                            <i data-lucide="ticket" class="w-8 h-8"></i>
-                        </div>
-                        <span class="text-5xl font-medieval text-otaru-gold/20 group-hover:text-otaru-gold/50 transition">01</span>
+            <div class="relative">
+                <!-- 中央の縦線 (金継ぎ風ライン) -->
+                <div class="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-transparent via-otaru-gold/40 to-transparent -translate-x-1/2 z-0"></div>
+
+                <!-- STEP 1: SHOOTING -->
+                <div class="relative z-10 bg-[#103b4a]/60 border border-otaru-gold/30 p-8 rounded-2xl text-center backdrop-blur-sm max-w-2xl mx-auto mb-12 shadow-[0_0_30px_rgba(0,0,0,0.3)]">
+                    <div class="inline-flex items-center justify-center p-4 rounded-full bg-[#0d2331] border border-otaru-gold mb-6 text-otaru-gold shadow-lg">
+                        <i data-lucide="camera" class="w-8 h-8"></i>
                     </div>
-                    <h3 class="font-bold text-xl mb-3 font-zen text-white">チケット購入</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed font-zen">BASEショップにてチケットをご購入ください。</p>
+                    <h3 class="text-2xl font-bold font-medieval text-white mb-2 tracking-widest">STEP 1： SHOOTING</h3>
+                    <p class="font-zen text-otaru-gold mb-6 text-sm tracking-widest">- 撮影 -</p>
+                    <div class="font-zen text-slate-300 space-y-2">
+                        <p class="text-xl font-bold text-white">⏱️ 15分間のスナップポートレート</p>
+                        <p class="text-sm opacity-80">（数枚撮影し、その中からベストを探ります）</p>
+                    </div>
                 </div>
-                <!-- Step 2 -->
-                <div class="bg-[#103b4a]/40 backdrop-blur-sm border border-otaru-gold/20 p-8 rounded-2xl hover:bg-[#103b4a]/60 hover:border-otaru-gold/60 transition group relative">
-                    <div class="absolute -top-1 -right-1 w-4 h-4 border-t border-r border-otaru-gold"></div>
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="p-3 bg-[#0d2331] border border-otaru-gold rounded-lg text-otaru-gold group-hover:scale-110 transition duration-300">
-                            <i data-lucide="check-circle" class="w-8 h-8"></i>
-                        </div>
-                        <span class="text-5xl font-medieval text-otaru-gold/20 group-hover:text-otaru-gold/50 transition">02</span>
+
+                <!-- Arrow Down -->
+                <div class="relative z-10 flex justify-center mb-12">
+                    <div class="bg-[#0a1b26] p-2 rounded-full border border-otaru-gold/30">
+                        <i data-lucide="arrow-down" class="w-6 h-6 text-otaru-gold animate-bounce"></i>
                     </div>
-                    <h3 class="font-bold text-xl mb-3 font-zen text-white">アンケート・署名</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed font-zen">モデルリリース（肖像権許諾）への署名とアンケートにご協力ください。</p>
                 </div>
-                <!-- Step 3 -->
-                <div class="bg-[#103b4a]/40 backdrop-blur-sm border border-otaru-gold/20 p-8 rounded-2xl hover:bg-[#103b4a]/60 hover:border-otaru-gold/60 transition group relative">
-                    <div class="absolute -top-1 -right-1 w-4 h-4 border-t border-r border-otaru-gold"></div>
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="p-3 bg-[#0d2331] border border-otaru-gold rounded-lg text-otaru-gold group-hover:scale-110 transition duration-300">
-                            <i data-lucide="message-circle" class="w-8 h-8"></i>
-                        </div>
-                        <span class="text-5xl font-medieval text-otaru-gold/20 group-hover:text-otaru-gold/50 transition">03</span>
+
+                <!-- STEP 2: SELECTION -->
+                <div class="relative z-10 bg-[#103b4a]/60 border border-otaru-gold/30 p-8 rounded-2xl text-center backdrop-blur-sm max-w-2xl mx-auto mb-8 shadow-[0_0_30px_rgba(0,0,0,0.3)]">
+                    <div class="inline-flex items-center justify-center p-4 rounded-full bg-[#0d2331] border border-otaru-gold mb-6 text-otaru-gold shadow-lg">
+                        <i data-lucide="check-circle-2" class="w-8 h-8"></i>
                     </div>
-                    <h3 class="font-bold text-xl mb-3 font-zen text-white">打ち合わせ (Google meet)</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed font-zen">オンラインで日程調整とイメージの擦り合わせを行います。</p>
+                    <h3 class="text-2xl font-bold font-medieval text-white mb-2 tracking-widest">STEP 2： SELECTION</h3>
+                    <p class="font-zen text-otaru-gold mb-6 text-sm tracking-widest">- 選定 -</p>
+                    <div class="font-zen text-slate-300 space-y-2">
+                        <p class="text-xl font-bold text-white">🏅 最高傑作の「2枚」を決定</p>
+                        <p class="text-sm opacity-80">（この2枚が、2つの未来を作ります）</p>
+                    </div>
                 </div>
-                <!-- Step 4 -->
-                <div class="bg-[#103b4a]/40 backdrop-blur-sm border border-otaru-gold/20 p-8 rounded-2xl hover:bg-[#103b4a]/60 hover:border-otaru-gold/60 transition group relative">
-                    <div class="absolute -top-1 -right-1 w-4 h-4 border-t border-r border-otaru-gold"></div>
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="p-3 bg-[#0d2331] border border-otaru-gold rounded-lg text-otaru-gold group-hover:scale-110 transition duration-300">
-                            <i data-lucide="camera" class="w-8 h-8"></i>
-                        </div>
-                        <span class="text-5xl font-medieval text-otaru-gold/20 group-hover:text-otaru-gold/50 transition">04</span>
-                    </div>
-                    <h3 class="font-bold text-xl mb-3 font-zen text-white">撮影当日</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed font-zen">15分間の真剣勝負。札幌駅周辺、または皆様の街で。</p>
+
+                <!-- 分岐ライン (SVG) -->
+                <div class="relative z-10 mb-8 h-16 w-full max-w-3xl mx-auto" aria-hidden="true">
+                    <svg class="w-full h-full text-otaru-gold/40" viewBox="0 0 100 20" preserveAspectRatio="none">
+                        <path d="M50,0 V5 Q50,15 25,15 H15 V20" fill="none" stroke="currentColor" stroke-width="0.3" />
+                        <path d="M50,0 V5 Q50,15 75,15 H85 V20" fill="none" stroke="currentColor" stroke-width="0.3" />
+                    </svg>
                 </div>
-                <!-- Step 5 -->
-                <div class="bg-[#103b4a]/40 backdrop-blur-sm border border-otaru-gold/20 p-8 rounded-2xl hover:bg-[#103b4a]/60 hover:border-otaru-gold/60 transition group relative">
-                    <div class="absolute -top-1 -right-1 w-4 h-4 border-t border-r border-otaru-gold"></div>
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="p-3 bg-[#0d2331] border border-otaru-gold rounded-lg text-otaru-gold group-hover:scale-110 transition duration-300">
-                            <i data-lucide="instagram" class="w-8 h-8"></i>
+
+                <!-- 分岐カラム -->
+                <div class="grid md:grid-cols-2 gap-6 md:gap-12 relative z-10 max-w-4xl mx-auto">
+                    
+                    <!-- Left: YOUR GIFT -->
+                    <div class="bg-gradient-to-b from-[#103b4a]/40 to-[#0d2331]/80 border border-otaru-gold/30 p-8 rounded-2xl text-center flex flex-col h-full hover:border-otaru-gold transition duration-500 hover:shadow-[0_0_20px_rgba(212,175,55,0.1)] group">
+                        <div class="mb-6">
+                            <h4 class="font-medieval text-2xl text-white mb-1 tracking-wide group-hover:text-otaru-gold transition">YOUR GIFT</h4>
+                            <p class="font-zen text-otaru-gold text-xs tracking-widest">( あなたへ )</p>
                         </div>
-                        <span class="text-5xl font-medieval text-otaru-gold/20 group-hover:text-otaru-gold/50 transition">05</span>
-                    </div>
-                    <h3 class="font-bold text-xl mb-3 font-zen text-white">編集・共同投稿</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed font-zen">Instagramにて共同投稿でシェアさせていただきます。</p>
-                </div>
-                <!-- Step 6 -->
-                <div class="bg-[#103b4a]/40 backdrop-blur-sm border border-otaru-gold/20 p-8 rounded-2xl hover:bg-[#103b4a]/60 hover:border-otaru-gold/60 transition group relative">
-                    <div class="absolute -top-1 -right-1 w-4 h-4 border-t border-r border-otaru-gold"></div>
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="p-3 bg-[#0d2331] border border-otaru-gold rounded-lg text-otaru-gold group-hover:scale-110 transition duration-300">
-                            <i data-lucide="map-pin" class="w-8 h-8"></i>
+                        
+                        <div class="flex-grow font-zen space-y-6">
+                            <div class="text-5xl mb-4 transform group-hover:scale-110 transition duration-300">🎁</div>
+                            <div>
+                                <p class="text-lg font-bold text-white mb-1">1カットデータ</p>
+                                <p class="text-slate-400 text-sm">プレゼント</p>
+                            </div>
+                            
+                            <div class="border-t border-otaru-gold/20 pt-6 text-left inline-block w-full">
+                                <ul class="text-sm text-slate-300 space-y-3 pl-4">
+                                    <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-otaru-gold"></i> SNSアイコン</li>
+                                    <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-otaru-gold"></i> 個人の記念</li>
+                                </ul>
+                            </div>
                         </div>
-                        <span class="text-5xl font-medieval text-otaru-gold/20 group-hover:text-otaru-gold/50 transition">06</span>
+                        
+                        <div class="mt-8 pt-4 border-t border-dashed border-otaru-gold/20">
+                            <span class="inline-flex items-center gap-1 bg-emerald-900/40 text-emerald-300 border border-emerald-500/30 px-4 py-1.5 rounded-full text-xs font-zen font-bold">
+                                <i data-lucide="unlock" class="w-3 h-3"></i> 自由に利用可
+                            </span>
+                        </div>
                     </div>
-                    <h3 class="font-bold text-xl mb-3 font-zen text-white">展示会・写真集</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed font-zen">2年後の目標達成時、展示会や写真集にて公開されます。</p>
+
+                    <!-- Right: FOR PROJECT -->
+                    <div class="bg-gradient-to-b from-[#103b4a]/40 to-[#0d2331]/80 border border-otaru-gold/30 p-8 rounded-2xl text-center flex flex-col h-full hover:border-otaru-gold transition duration-500 hover:shadow-[0_0_20px_rgba(212,175,55,0.1)] group">
+                        <div class="mb-6">
+                            <h4 class="font-medieval text-2xl text-white mb-1 tracking-wide group-hover:text-otaru-gold transition">FOR PROJECT</h4>
+                            <p class="font-zen text-otaru-gold text-xs tracking-widest">( 未来へ )</p>
+                        </div>
+                        
+                        <div class="flex-grow font-zen space-y-6">
+                            <div class="text-5xl mb-4 transform group-hover:scale-110 transition duration-300">🤝</div>
+                            <div>
+                                <p class="text-lg font-bold text-white mb-1">共同作品として</p>
+                                <p class="text-slate-400 text-sm">アーカイブ</p>
+                            </div>
+                            
+                            <div class="border-t border-otaru-gold/20 pt-6 text-left inline-block w-full">
+                                <ul class="text-sm text-slate-300 space-y-3 pl-4">
+                                    <li class="flex items-center gap-2"><i data-lucide="sparkles" class="w-4 h-4 text-otaru-gold"></i> Instagram共同投稿</li>
+                                    <li class="flex items-center gap-2"><i data-lucide="sparkles" class="w-4 h-4 text-otaru-gold"></i> 展示会 (2028年予定)</li>
+                                    <li class="flex items-center gap-2"><i data-lucide="sparkles" class="w-4 h-4 text-otaru-gold"></i> 写真集</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8 pt-4 border-t border-dashed border-otaru-gold/20">
+                            <span class="inline-flex items-center gap-1 bg-yellow-900/40 text-yellow-300 border border-yellow-500/30 px-4 py-1.5 rounded-full text-xs font-zen font-bold">
+                                <i data-lucide="alert-circle" class="w-3 h-3"></i> モデルリリース必須
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
             
-            <div class="mt-12 bg-yellow-900/20 border border-yellow-700/50 p-4 rounded-xl text-center text-yellow-200 text-sm max-w-2xl mx-auto">
-                <span class="font-bold block mb-1 text-otaru-gold">⚠️ ご注意</span>
-                本プロジェクトは展示・写真集化を目指しているため、<br class="hidden md:inline">モデルリリース（肖像権使用許諾）へのサインが必須となります。
+            <div class="mt-16 bg-yellow-900/20 border border-yellow-700/50 p-6 rounded-xl text-center text-yellow-200 text-sm max-w-2xl mx-auto font-zen shadow-lg">
+                <i data-lucide="info" class="w-5 h-5 inline-block mb-2 text-otaru-gold"></i>
+                <p class="leading-loose">
+                    撮影はオンラインで事前の打ち合わせを行い、<br class="hidden md:inline">
+                    日時や場所（基本は札幌駅周辺）を調整します。<br>
+                    遠方の方はチケット購入前にご相談ください。
+                </p>
             </div>
         </div>
     </section>
@@ -488,155 +518,36 @@
             </div>
         </div>
 
-        <!-- マーキーエリア -->
+        <!-- マーキーエリア（水平無限スクロール） -->
         <div class="gallery-marquee-wrapper">
             <div class="gallery-marquee-content">
-                <!-- 画像セット1 (オリジナル) -->
+                <!-- 画像セット (images/gallery01.PNG ~ gallery10.PNG) -->
+                <!-- ループをスムーズにするため、同じセットを2回繰り返します -->
                 <div class="flex">
-                    <!-- Image 1 -->
-                    <div class="gallery-item group">
-                        <img src="images/gallery01.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
-                            <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
-                        </div>
-                    </div>
-                    <!-- Image 2 -->
-                    <div class="gallery-item group">
-                        <img src="images/gallery02.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
-                            <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
-                        </div>
-                    </div>
-                    <!-- Image 3 -->
-                    <div class="gallery-item group">
-                        <img src="images/gallery03.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
-                            <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
-                        </div>
-                    </div>
-                    <!-- Image 4 -->
-                    <div class="gallery-item group">
-                        <img src="images/gallery04.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
-                            <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
-                        </div>
-                    </div>
-                    <!-- Image 5 -->
-                    <div class="gallery-item group">
-                        <img src="images/gallery05.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
-                            <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
-                        </div>
-                    </div>
-                    <!-- Image 6 -->
-                    <div class="gallery-item group">
-                        <img src="images/gallery06.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
-                            <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
-                        </div>
-                    </div>
-                    <!-- Image 7 -->
-                    <div class="gallery-item group">
-                        <img src="images/gallery07.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
-                            <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
-                        </div>
-                    </div>
-                    <!-- Image 8 -->
-                    <div class="gallery-item group">
-                        <img src="images/gallery08.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
-                            <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
-                        </div>
-                    </div>
-                    <!-- Image 9 -->
-                    <div class="gallery-item group">
-                        <img src="images/gallery09.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
-                            <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
-                        </div>
-                    </div>
-                    <!-- Image 10 -->
-                    <div class="gallery-item group">
-                        <img src="images/gallery10.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
-                            <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
-                        </div>
-                    </div>
+                    <!-- Set 1 -->
+                    <div class="gallery-item group"><img src="images/gallery01.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image"></div>
+                    <div class="gallery-item group"><img src="images/gallery02.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image"></div>
+                    <div class="gallery-item group"><img src="images/gallery03.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image"></div>
+                    <div class="gallery-item group"><img src="images/gallery04.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image"></div>
+                    <div class="gallery-item group"><img src="images/gallery05.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image"></div>
+                    <div class="gallery-item group"><img src="images/gallery06.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image"></div>
+                    <div class="gallery-item group"><img src="images/gallery07.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image"></div>
+                    <div class="gallery-item group"><img src="images/gallery08.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image"></div>
+                    <div class="gallery-item group"><img src="images/gallery09.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image"></div>
+                    <div class="gallery-item group"><img src="images/gallery10.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image"></div>
                 </div>
-
-                <!-- 画像セット2 (ループ用複製: セット1と同じ内容) -->
                 <div class="flex">
-                    <!-- Image 1 -->
-                    <div class="gallery-item group">
-                        <img src="images/gallery01.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
-                            <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
-                        </div>
-                    </div>
-                    <!-- Image 2 -->
-                    <div class="gallery-item group">
-                        <img src="images/gallery02.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
-                            <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
-                        </div>
-                    </div>
-                    <!-- Image 3 -->
-                    <div class="gallery-item group">
-                        <img src="images/gallery03.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
-                            <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
-                        </div>
-                    </div>
-                    <!-- Image 4 -->
-                    <div class="gallery-item group">
-                        <img src="images/gallery04.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
-                            <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
-                        </div>
-                    </div>
-                    <!-- Image 5 -->
-                    <div class="gallery-item group">
-                        <img src="images/gallery05.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
-                            <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
-                        </div>
-                    </div>
-                    <!-- Image 6 -->
-                    <div class="gallery-item group">
-                        <img src="images/gallery06.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
-                            <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
-                        </div>
-                    </div>
-                    <!-- Image 7 -->
-                    <div class="gallery-item group">
-                        <img src="images/gallery07.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
-                            <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
-                        </div>
-                    </div>
-                    <!-- Image 8 -->
-                    <div class="gallery-item group">
-                        <img src="images/gallery08.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
-                            <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
-                        </div>
-                    </div>
-                    <!-- Image 9 -->
-                    <div class="gallery-item group">
-                        <img src="images/gallery09.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
-                            <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
-                        </div>
-                    </div>
-                    <!-- Image 10 -->
-                    <div class="gallery-item group">
-                        <img src="images/gallery10.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331] to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
-                            <span class="text-otaru-gold text-xs font-medieval border border-otaru-gold px-2 py-1 rounded bg-[#0d2331]/80">#1500PROJECT</span>
-                        </div>
-                    </div>
+                    <!-- Set 2 (Clone for seamless loop) -->
+                    <div class="gallery-item group"><img src="images/gallery01.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image"></div>
+                    <div class="gallery-item group"><img src="images/gallery02.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image"></div>
+                    <div class="gallery-item group"><img src="images/gallery03.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image"></div>
+                    <div class="gallery-item group"><img src="images/gallery04.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image"></div>
+                    <div class="gallery-item group"><img src="images/gallery05.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image"></div>
+                    <div class="gallery-item group"><img src="images/gallery06.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image"></div>
+                    <div class="gallery-item group"><img src="images/gallery07.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image"></div>
+                    <div class="gallery-item group"><img src="images/gallery08.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image"></div>
+                    <div class="gallery-item group"><img src="images/gallery09.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image"></div>
+                    <div class="gallery-item group"><img src="images/gallery10.PNG" alt="Portrait" class="w-full h-full object-cover zoomable-image"></div>
                 </div>
             </div>
         </div>
@@ -654,13 +565,10 @@
                 </p>
             </div>
 
-            <!-- items-start を items-stretch に変更して高さを揃える -->
             <div class="grid md:grid-cols-2 gap-8 items-stretch">
                 <!-- 通常参加チケット -->
-                <!-- flex flex-col h-full を追加 -->
                 <div class="bg-gradient-to-b from-[#103b4a] to-[#0d2331] rounded-3xl p-8 md:p-10 shadow-[0_0_20px_rgba(0,0,0,0.3)] border border-otaru-gold/30 transition hover:-translate-y-1 hover:border-otaru-gold duration-300 relative overflow-hidden group flex flex-col h-full">
                     <div class="absolute top-0 left-0 w-full h-1 bg-otaru-gold"></div>
-                    <!-- 金継ぎライン装飾 -->
                     <div class="absolute -right-8 -bottom-8 w-32 h-32 border border-otaru-gold/20 rounded-full"></div>
                     
                     <h3 class="text-2xl font-bold mb-2 text-white font-zen">参加チケット</h3>
@@ -672,35 +580,21 @@
                     </div>
                     
                     <ul class="space-y-4 mb-10">
-                        <li class="flex items-center gap-3 text-slate-300 font-medium font-zen">
-                            <i data-lucide="check" class="w-5 h-5 text-otaru-gold"></i>
-                            撮影時間 15分
-                        </li>
-                        <li class="flex items-center gap-3 text-slate-300 font-medium font-zen">
-                            <i data-lucide="check" class="w-5 h-5 text-otaru-gold"></i>
-                            スナップポートレート
-                        </li>
-                        <li class="flex items-center gap-3 text-slate-300 font-medium font-zen">
-                            <i data-lucide="check" class="w-5 h-5 text-otaru-gold"></i>
-                            札幌駅周辺（基本）
-                        </li>
-                        <li class="flex items-center gap-3 text-slate-300 font-medium font-zen">
-                            <i data-lucide="check" class="w-5 h-5 text-otaru-gold"></i>
-                            展示会・写真集への掲載権
-                        </li>
+                        <li class="flex items-center gap-3 text-slate-300 font-medium font-zen"><i data-lucide="check" class="w-5 h-5 text-otaru-gold"></i>撮影時間 15分</li>
+                        <li class="flex items-center gap-3 text-slate-300 font-medium font-zen"><i data-lucide="check" class="w-5 h-5 text-otaru-gold"></i>スナップポートレート</li>
+                        <li class="flex items-center gap-3 text-slate-300 font-medium font-zen"><i data-lucide="check" class="w-5 h-5 text-otaru-gold"></i>札幌駅周辺（基本）</li>
+                        <li class="flex items-center gap-3 text-slate-300 font-medium font-zen"><i data-lucide="check" class="w-5 h-5 text-otaru-gold"></i>展示会・写真集への掲載権</li>
                     </ul>
                     
-                    <!-- ボタン修正: アンケートボタンと同様の高視認性スタイルへ変更 -->
-                    <a href="https://dsl.theshop.jp/items/129792405" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-3 bg-gradient-to-r from-yellow-700 via-yellow-600 to-yellow-800 text-white border border-yellow-400/50 px-8 py-4 rounded-xl font-bold shadow-[0_0_15px_rgba(212,175,55,0.4)] hover:brightness-110 hover:-translate-y-1 transition duration-300 font-zen tracking-wide mt-auto group">
+                    <!-- ボタン修正: 高視認性 + 枠線 -->
+                    <a href="https://dsl.theshop.jp/items/129792405" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-3 bg-gradient-to-r from-yellow-700 via-yellow-600 to-yellow-800 text-white border-2 border-yellow-400/50 px-8 py-4 rounded-xl font-bold shadow-[0_0_15px_rgba(212,175,55,0.4)] hover:brightness-110 hover:-translate-y-1 transition duration-300 font-zen tracking-wide mt-auto group">
                         BASEで購入する <i data-lucide="external-link" class="w-5 h-5 group-hover:translate-x-1 transition"></i>
                     </a>
                 </div>
 
                 <!-- 応援・遠方チケット -->
-                <!-- flex flex-col h-full を追加 -->
                 <div class="bg-gradient-to-b from-[#2d2210] to-[#0d2331] rounded-3xl p-8 md:p-10 shadow-[0_0_20px_rgba(212,175,55,0.1)] border border-yellow-700/50 transition hover:-translate-y-1 hover:border-otaru-gold duration-300 relative overflow-hidden group flex flex-col h-full">
                     <div class="absolute top-0 right-0 bg-otaru-gold text-[#0d2331] text-xs font-medieval tracking-wider px-4 py-2 rounded-bl-xl z-10">GIFT / SUPPORT</div>
-                    <!-- 名称変更: 無期限有効チケット -> 応援チケット -->
                     <h3 class="text-2xl font-bold mb-2 text-otaru-gold font-zen">応援チケット</h3>
                     <p class="text-slate-500 text-sm mb-6 font-zen">遠方の方・ご支援・プレゼントに</p>
                     
@@ -715,27 +609,23 @@
                         大切な人の肖像を残しておきたいとお考えではありませんか？もしよかったら、この企画のお話ししてみてください。
                     </div>
                     
-                    <!-- ボタン修正: アンケートボタンと同様の高視認性スタイルへ変更 -->
-                    <a href="https://DSL.theshop.jp/items/129795239" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-3 bg-gradient-to-r from-yellow-700 via-yellow-600 to-yellow-800 text-white border border-yellow-400/50 px-8 py-4 rounded-xl font-bold shadow-[0_0_15px_rgba(212,175,55,0.4)] hover:brightness-110 hover:-translate-y-1 transition duration-300 font-zen tracking-wide mt-auto group">
+                    <!-- ボタン修正: 高視認性 + 枠線 -->
+                    <a href="https://DSL.theshop.jp/items/129795239" target="_blank" rel="noopener noreferrer" class="w-full inline-flex justify-center items-center gap-3 bg-gradient-to-r from-yellow-700 via-yellow-600 to-yellow-800 text-white border-2 border-yellow-400/50 px-8 py-4 rounded-xl font-bold shadow-[0_0_15px_rgba(212,175,55,0.4)] hover:brightness-110 hover:-translate-y-1 transition duration-300 font-zen tracking-wide mt-auto group">
                         BASEで応援購入する <i data-lucide="external-link" class="w-5 h-5 group-hover:translate-x-1 transition"></i>
                     </a>
                 </div>
             </div>
             
+            <!-- アンケート -->
             <div class="mt-24 mb-8 text-center relative">
-                <!-- 装飾背景 -->
                 <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-full bg-[#103b4a]/20 blur-3xl rounded-full -z-10"></div>
-
-                <a href="entry.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 bg-gradient-to-r from-yellow-700 via-yellow-600 to-yellow-800 text-white border border-yellow-400/50 px-12 py-5 rounded-full text-xl font-bold shadow-[0_0_25px_rgba(212,175,55,0.5)] hover:brightness-110 hover:-translate-y-1 transition duration-300 font-zen tracking-wide gold-shine group relative z-10">
+                <a href="entry.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 bg-gradient-to-r from-yellow-700 via-yellow-600 to-yellow-800 text-white border-2 border-yellow-400/50 px-12 py-5 rounded-full text-xl font-bold shadow-[0_0_25px_rgba(212,175,55,0.5)] hover:brightness-110 hover:-translate-y-1 transition duration-300 font-zen tracking-wide gold-shine group relative z-10">
                     <i data-lucide="clipboard-check" class="w-6 h-6 text-yellow-200"></i>
                     アンケートはコチラ
                     <i data-lucide="external-link" class="w-5 h-5 ml-1 opacity-80 group-hover:translate-x-1 transition"></i>
                 </a>
-                
                 <div class="mt-10 max-w-2xl mx-auto bg-[#0d2331]/80 border border-otaru-gold/30 p-6 rounded-2xl backdrop-blur-sm relative overflow-hidden">
-                    <!-- 金継ぎライン -->
                     <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-otaru-gold to-transparent opacity-50"></div>
-                    
                     <h3 class="text-otaru-gold font-bold text-lg mb-4 font-zen flex items-center justify-center gap-2">
                         <span class="w-2 h-2 rounded-full bg-otaru-gold inline-block"></span>
                         チケットご購入の皆さまへアンケート回答のお願い
@@ -751,46 +641,22 @@
                 <h4 class="font-bold mb-8 text-center text-otaru-gold/60 text-sm tracking-widest uppercase font-medieval text-xl">Other Menu (Regular)</h4>
                 <p class="text-center text-slate-400 font-zen mb-10 text-sm">プロジェクト以外の本格的な撮影も承っております。<br>用途に合わせてお選びください。</p>
                 
-                <!-- メニューリスト -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto mb-12 font-zen">
-                    <div class="bg-[#103b4a]/30 border border-slate-700 rounded-xl p-6 flex justify-between items-center hover:border-otaru-gold transition group">
-                        <span class="text-slate-300 font-bold group-hover:text-white transition">簡易スナップ</span>
-                        <span class="text-otaru-gold font-futuristic text-xl">¥15,000</span>
-                    </div>
-                    <div class="bg-[#103b4a]/30 border border-slate-700 rounded-xl p-6 flex justify-between items-center hover:border-otaru-gold transition group">
-                        <span class="text-slate-300 font-bold group-hover:text-white transition">ライティング撮影</span>
-                        <span class="text-otaru-gold font-futuristic text-xl">¥20,000</span>
-                    </div>
-                    <div class="bg-[#103b4a]/30 border border-slate-700 rounded-xl p-6 flex justify-between items-center hover:border-otaru-gold transition group">
-                        <span class="text-slate-300 font-bold group-hover:text-white transition">ワンコスナップ</span>
-                        <span class="text-otaru-gold font-futuristic text-xl">¥30,000</span>
-                    </div>
-                    <div class="bg-[#103b4a]/30 border border-slate-700 rounded-xl p-6 flex justify-between items-center hover:border-otaru-gold transition group">
-                        <span class="text-slate-300 font-bold group-hover:text-white transition">物件撮影・街ブラPR</span>
-                        <span class="text-sm text-slate-400 border border-slate-600 px-3 py-1 rounded-full">要相談</span>
-                    </div>
+                    <div class="bg-[#103b4a]/30 border border-slate-700 rounded-xl p-6 flex justify-between items-center hover:border-otaru-gold transition group"><span class="text-slate-300 font-bold group-hover:text-white transition">簡易スナップ</span><span class="text-otaru-gold font-futuristic text-xl">¥15,000</span></div>
+                    <div class="bg-[#103b4a]/30 border border-slate-700 rounded-xl p-6 flex justify-between items-center hover:border-otaru-gold transition group"><span class="text-slate-300 font-bold group-hover:text-white transition">ライティング撮影</span><span class="text-otaru-gold font-futuristic text-xl">¥20,000</span></div>
+                    <div class="bg-[#103b4a]/30 border border-slate-700 rounded-xl p-6 flex justify-between items-center hover:border-otaru-gold transition group"><span class="text-slate-300 font-bold group-hover:text-white transition">ワンコスナップ</span><span class="text-otaru-gold font-futuristic text-xl">¥30,000</span></div>
+                    <div class="bg-[#103b4a]/30 border border-slate-700 rounded-xl p-6 flex justify-between items-center hover:border-otaru-gold transition group"><span class="text-slate-300 font-bold group-hover:text-white transition">物件撮影・街ブラPR</span><span class="text-sm text-slate-400 border border-slate-600 px-3 py-1 rounded-full">要相談</span></div>
                 </div>
 
-                <!-- 参考画像 -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-                    <!-- 画像1 -->
                     <div class="rounded-2xl overflow-hidden border border-otaru-gold/30 shadow-lg group relative h-64 bg-slate-800 cursor-pointer">
-                        <img 
-                            src="images/menu01.jpg" 
-                            alt="Menu Sample 1" 
-                            class="w-full h-full object-cover transform group-hover:scale-105 transition duration-700 opacity-80 group-hover:opacity-100 zoomable-image"
-                        >
+                        <img src="images/menu01.jpg" alt="Menu Sample 1" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-700 opacity-80 group-hover:opacity-100 zoomable-image">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331]/80 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
                             <span class="text-otaru-gold font-zen text-sm">Portrait / Snap <span class="text-xs ml-2 text-white">(Click to Zoom)</span></span>
                         </div>
                     </div>
-                    <!-- 画像2 -->
                     <div class="rounded-2xl overflow-hidden border border-otaru-gold/30 shadow-lg group relative h-64 bg-slate-800 cursor-pointer">
-                        <img 
-                            src="images/menu02.jpg" 
-                            alt="Menu Sample 2" 
-                            class="w-full h-full object-cover transform group-hover:scale-105 transition duration-700 opacity-80 group-hover:opacity-100 zoomable-image"
-                        >
+                        <img src="images/menu02.jpg" alt="Menu Sample 2" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-700 opacity-80 group-hover:opacity-100 zoomable-image">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#0d2331]/80 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4 pointer-events-none">
                             <span class="text-otaru-gold font-zen text-sm">Dog / Location <span class="text-xs ml-2 text-white">(Click to Zoom)</span></span>
                         </div>
@@ -809,80 +675,40 @@
             </div>
             
             <div class="space-y-4" id="faq-container">
-                <!-- FAQ Item 1 -->
                 <div class="border border-slate-700 rounded-xl overflow-hidden hover:border-otaru-gold transition bg-[#0d2331]">
                     <button class="w-full text-left p-6 font-bold flex justify-between items-center faq-toggle text-slate-200 hover:text-white transition">
-                        <span class="flex items-start gap-4 pr-4">
-                            <span class="text-otaru-gold px-2 py-1 rounded text-xs leading-none mt-1 font-medieval text-lg">Q</span>
-                            <span class="leading-snug font-zen text-sm">決済方法は？</span>
-                        </span>
+                        <span class="flex items-start gap-4 pr-4"><span class="text-otaru-gold px-2 py-1 rounded text-xs leading-none mt-1 font-medieval text-lg">Q</span><span class="leading-snug font-zen text-sm">決済方法は？</span></span>
                         <i data-lucide="chevron-down" class="text-otaru-gold transition-transform duration-300 w-5 h-5 flex-shrink-0"></i>
                     </button>
-                    <div class="faq-content bg-[#103b4a] text-slate-300 text-sm leading-relaxed">
-                        <div class="p-6 pt-2 border-t border-slate-600 font-zen">
-                            クレジットカード決済・Pay ID 翌月あと払いのみご利用可能です。
-                        </div>
-                    </div>
+                    <div class="faq-content bg-[#103b4a] text-slate-300 text-sm leading-relaxed"><div class="p-6 pt-2 border-t border-slate-600 font-zen">クレジットカード決済・Pay ID 翌月あと払いのみご利用可能です。</div></div>
                 </div>
-                <!-- FAQ Item 2 -->
                 <div class="border border-slate-700 rounded-xl overflow-hidden hover:border-otaru-gold transition bg-[#0d2331]">
                     <button class="w-full text-left p-6 font-bold flex justify-between items-center faq-toggle text-slate-200 hover:text-white transition">
-                        <span class="flex items-start gap-4 pr-4">
-                            <span class="text-otaru-gold px-2 py-1 rounded text-xs leading-none mt-1 font-medieval text-lg">Q</span>
-                            <span class="leading-snug font-zen text-sm">チケットに有効期限はありますか？</span>
-                        </span>
+                        <span class="flex items-start gap-4 pr-4"><span class="text-otaru-gold px-2 py-1 rounded text-xs leading-none mt-1 font-medieval text-lg">Q</span><span class="leading-snug font-zen text-sm">チケットに有効期限はありますか？</span></span>
                         <i data-lucide="chevron-down" class="text-otaru-gold transition-transform duration-300 w-5 h-5 flex-shrink-0"></i>
                     </button>
-                    <div class="faq-content bg-[#103b4a] text-slate-300 text-sm leading-relaxed">
-                        <div class="p-6 pt-2 border-t border-slate-600 font-zen">
-                            基本的にはございません。ですが、2年以内に1500人達成を目指しておりますので、なるべく早めにご参加いただけると嬉しいです。
-                        </div>
-                    </div>
+                    <div class="faq-content bg-[#103b4a] text-slate-300 text-sm leading-relaxed"><div class="p-6 pt-2 border-t border-slate-600 font-zen">基本的にはございません。ですが、2年以内に1500人達成を目指しておりますので、なるべく早めにご参加いただけると嬉しいです。</div></div>
                 </div>
-                <!-- FAQ Item 3 -->
                 <div class="border border-slate-700 rounded-xl overflow-hidden hover:border-otaru-gold transition bg-[#0d2331]">
                     <button class="w-full text-left p-6 font-bold flex justify-between items-center faq-toggle text-slate-200 hover:text-white transition">
-                        <span class="flex items-start gap-4 pr-4">
-                            <span class="text-otaru-gold px-2 py-1 rounded text-xs leading-none mt-1 font-medieval text-lg">Q</span>
-                            <span class="leading-snug font-zen text-sm">撮影地はどこですか？</span>
-                        </span>
+                        <span class="flex items-start gap-4 pr-4"><span class="text-otaru-gold px-2 py-1 rounded text-xs leading-none mt-1 font-medieval text-lg">Q</span><span class="leading-snug font-zen text-sm">撮影地はどこですか？</span></span>
                         <i data-lucide="chevron-down" class="text-otaru-gold transition-transform duration-300 w-5 h-5 flex-shrink-0"></i>
                     </button>
-                    <div class="faq-content bg-[#103b4a] text-slate-300 text-sm leading-relaxed">
-                        <div class="p-6 pt-2 border-t border-slate-600 font-zen">
-                            基本的には「札幌駅周辺」でお願いします。全国各地へ飛んでいく所存ですので、ミーティングにて擦り合わせましょう。
-                        </div>
-                    </div>
+                    <div class="faq-content bg-[#103b4a] text-slate-300 text-sm leading-relaxed"><div class="p-6 pt-2 border-t border-slate-600 font-zen">基本的には「札幌駅周辺」でお願いします。全国各地へ飛んでいく所存ですので、ミーティングにて擦り合わせましょう。</div></div>
                 </div>
-                <!-- FAQ Item 4 -->
                 <div class="border border-slate-700 rounded-xl overflow-hidden hover:border-otaru-gold transition bg-[#0d2331]">
                     <button class="w-full text-left p-6 font-bold flex justify-between items-center faq-toggle text-slate-200 hover:text-white transition">
-                        <span class="flex items-start gap-4 pr-4">
-                            <span class="text-otaru-gold px-2 py-1 rounded text-xs leading-none mt-1 font-medieval text-lg">Q</span>
-                            <span class="leading-snug font-zen text-sm">グループでの申し込みは？</span>
-                        </span>
+                        <span class="flex items-start gap-4 pr-4"><span class="text-otaru-gold px-2 py-1 rounded text-xs leading-none mt-1 font-medieval text-lg">Q</span><span class="leading-snug font-zen text-sm">グループでの申し込みは？</span></span>
                         <i data-lucide="chevron-down" class="text-otaru-gold transition-transform duration-300 w-5 h-5 flex-shrink-0"></i>
                     </button>
-                    <div class="faq-content bg-[#103b4a] text-slate-300 text-sm leading-relaxed">
-                        <div class="p-6 pt-2 border-t border-slate-600 font-zen">
-                            お一人一枚のチケットをご購入ください（撮影はソロカットになります）。代表者様の一括購入は可能です。
-                        </div>
-                    </div>
+                    <div class="faq-content bg-[#103b4a] text-slate-300 text-sm leading-relaxed"><div class="p-6 pt-2 border-t border-slate-600 font-zen">お一人一枚のチケットをご購入ください（撮影はソロカットになります）。代表者様の一括購入は可能です。</div></div>
                 </div>
-                <!-- FAQ Item 5 -->
                 <div class="border border-slate-700 rounded-xl overflow-hidden hover:border-otaru-gold transition bg-[#0d2331]">
                     <button class="w-full text-left p-6 font-bold flex justify-between items-center faq-toggle text-slate-200 hover:text-white transition">
-                        <span class="flex items-start gap-4 pr-4">
-                            <span class="text-otaru-gold px-2 py-1 rounded text-xs leading-none mt-1 font-medieval text-lg">Q</span>
-                            <span class="leading-snug font-zen text-sm">チケットをプレゼントできますか？</span>
-                        </span>
+                        <span class="flex items-start gap-4 pr-4"><span class="text-otaru-gold px-2 py-1 rounded text-xs leading-none mt-1 font-medieval text-lg">Q</span><span class="leading-snug font-zen text-sm">チケットをプレゼントできますか？</span></span>
                         <i data-lucide="chevron-down" class="text-otaru-gold transition-transform duration-300 w-5 h-5 flex-shrink-0"></i>
                     </button>
-                    <div class="faq-content bg-[#103b4a] text-slate-300 text-sm leading-relaxed">
-                        <div class="p-6 pt-2 border-t border-slate-600 font-zen">
-                            はい、権利の贈答はOKです。ご本人と撮影される方が一緒に打ち合わせに参加いただくのが望ましいです。転売は禁止です。
-                        </div>
-                    </div>
+                    <div class="faq-content bg-[#103b4a] text-slate-300 text-sm leading-relaxed"><div class="p-6 pt-2 border-t border-slate-600 font-zen">はい、権利の贈答はOKです。ご本人と撮影される方が一緒に打ち合わせに参加いただくのが望ましいです。転売は禁止です。</div></div>
                 </div>
             </div>
         </div>
@@ -896,9 +722,7 @@
             <div class="grid md:grid-cols-2 gap-8 items-stretch">
                 <!-- タイアップ広告 -->
                 <div class="border border-otaru-gold/30 bg-[#103b4a]/30 p-8 rounded-3xl relative overflow-hidden flex flex-col justify-center text-center shadow-lg group hover:border-otaru-gold/60 transition duration-500">
-                    <!-- 装飾 -->
                     <div class="absolute top-0 right-0 w-24 h-24 bg-otaru-gold/5 rounded-full blur-2xl"></div>
-                    
                     <h3 class="text-white font-bold text-xl mb-6 relative z-10 font-zen tracking-wide">タイアップ広告・協賛について</h3>
                     <p class="text-sm text-slate-300 mb-8 leading-relaxed relative z-10 max-w-xl mx-auto font-zen">
                         本プロジェクトにおける<br>タイアップ広告、企業スポンサー様を募集しております。<br/>
@@ -908,8 +732,8 @@
                         展示会・製本販売には<span class="text-otaru-gold font-bold text-lg mx-1">2500万円</span>必要です。<br>ぜひお力添えよろしくお願いします。
                     </p>
                     <div class="mt-auto">
-                        <!-- ボタン修正: アンケートボタンと同様の高視認性スタイルへ変更 -->
-                        <a href="mailto:1500project@design4qol.com" class="inline-flex items-center gap-3 bg-gradient-to-r from-yellow-700 via-yellow-600 to-yellow-800 text-white border border-yellow-400/50 px-10 py-4 rounded-xl font-bold shadow-[0_0_15px_rgba(212,175,55,0.4)] hover:brightness-110 hover:-translate-y-1 transition duration-300 relative z-10 font-zen tracking-wide group">
+                        <!-- ボタン修正: 高視認性 + 枠線 -->
+                        <a href="mailto:1500project@design4qol.com" class="inline-flex items-center gap-3 bg-gradient-to-r from-yellow-700 via-yellow-600 to-yellow-800 text-white border-2 border-yellow-400/50 px-10 py-4 rounded-xl font-bold shadow-[0_0_15px_rgba(212,175,55,0.4)] hover:brightness-110 hover:-translate-y-1 transition duration-300 relative z-10 font-zen tracking-wide group">
                             <i data-lucide="mail" class="w-5 h-5 group-hover:scale-110 transition"></i> お問い合わせフォームへ
                         </a>
                     </div>
@@ -917,34 +741,16 @@
 
                 <!-- 銀行振込 -->
                 <div class="border border-otaru-gold/30 bg-[#103b4a]/30 p-8 rounded-3xl relative overflow-hidden shadow-lg group hover:border-otaru-gold/60 transition duration-500">
-                     <!-- 装飾 -->
                     <div class="absolute top-0 left-0 w-16 h-16 border-t border-l border-otaru-gold/30 rounded-tl-2xl opacity-50"></div>
                     <div class="absolute bottom-0 right-0 w-16 h-16 border-b border-r border-otaru-gold/30 rounded-br-2xl opacity-50"></div>
-
                     <h3 class="text-white font-bold text-xl mb-2 text-center font-zen tracking-wide">寄付はこちら</h3>
                     <p class="text-otaru-gold text-xs mb-6 font-zen text-center opacity-80">銀行振込でのご支援も受け付けております</p>
-                    
                     <dl class="text-slate-200 space-y-3 font-zen text-base bg-[#0d2331]/50 p-6 rounded-xl border border-otaru-gold/10">
-                        <div class="flex justify-between border-b border-slate-700/50 pb-2">
-                            <dt class="text-otaru-gold text-sm">銀行名</dt>
-                            <dd class="font-bold tracking-wider">北洋銀行</dd>
-                        </div>
-                        <div class="flex justify-between border-b border-slate-700/50 pb-2">
-                            <dt class="text-otaru-gold text-sm">支店名</dt>
-                            <dd class="font-bold tracking-wider">宮の森支店</dd>
-                        </div>
-                        <div class="flex justify-between border-b border-slate-700/50 pb-2">
-                            <dt class="text-otaru-gold text-sm">口座種別</dt>
-                            <dd class="font-bold tracking-wider">普通</dd>
-                        </div>
-                        <div class="flex justify-between border-b border-slate-700/50 pb-2">
-                            <dt class="text-otaru-gold text-sm">口座番号</dt>
-                            <dd class="font-bold tracking-widest font-futuristic text-lg">4119909</dd>
-                        </div>
-                        <div class="flex justify-between pt-1">
-                            <dt class="text-otaru-gold text-sm">口座名義</dt>
-                            <dd class="font-bold tracking-wider">合同会社MiLio</dd>
-                        </div>
+                        <div class="flex justify-between border-b border-slate-700/50 pb-2"><dt class="text-otaru-gold text-sm">銀行名</dt><dd class="font-bold tracking-wider">北洋銀行</dd></div>
+                        <div class="flex justify-between border-b border-slate-700/50 pb-2"><dt class="text-otaru-gold text-sm">支店名</dt><dd class="font-bold tracking-wider">宮の森支店</dd></div>
+                        <div class="flex justify-between border-b border-slate-700/50 pb-2"><dt class="text-otaru-gold text-sm">口座種別</dt><dd class="font-bold tracking-wider">普通</dd></div>
+                        <div class="flex justify-between border-b border-slate-700/50 pb-2"><dt class="text-otaru-gold text-sm">口座番号</dt><dd class="font-bold tracking-widest font-futuristic text-lg">4119909</dd></div>
+                        <div class="flex justify-between pt-1"><dt class="text-otaru-gold text-sm">口座名義</dt><dd class="font-bold tracking-wider">合同会社MiLio</dd></div>
                     </dl>
                 </div>
             </div>
@@ -960,7 +766,6 @@
             </div>
 
             <div class="grid md:grid-cols-2 gap-12 items-center">
-                <!-- 左：コンセプトテキスト -->
                 <div class="space-y-6">
                     <h3 class="text-2xl font-zen text-white border-l-4 border-otaru-gold pl-4 leading-relaxed">
                         1500人の笑顔が<br>一堂に会する場所。
@@ -970,10 +775,7 @@
                         1500枚のポートレートが並ぶ圧倒的な空間と、訪れる人々が交流できる温かい場所を目指しています。
                     </p>
                     <div class="bg-[#103b4a]/40 p-6 rounded-xl border border-otaru-gold/20">
-                        <p class="text-otaru-gold font-zen text-sm mb-2">
-                            <i data-lucide="map-pin" class="inline-block w-4 h-4 mr-1"></i>
-                            現在の主な候補エリア
-                        </p>
+                        <p class="text-otaru-gold font-zen text-sm mb-2"><i data-lucide="map-pin" class="inline-block w-4 h-4 mr-1"></i>現在の主な候補エリア</p>
                         <ul class="text-white font-zen space-y-2 ml-5 list-disc marker:text-otaru-gold">
                             <li>札幌市民ギャラリー</li>
                             <li>SCARTS（札幌文化芸術交流センター）</li>
@@ -982,39 +784,26 @@
                     </div>
                 </div>
 
-                <!-- 右：イメージ画像エリア -->
+                <!-- スライドショーエリア -->
                 <div class="relative group">
-                    <!-- 金継ぎ風の枠 -->
                     <div class="absolute inset-0 border-2 border-otaru-gold/30 rounded-2xl transform rotate-3 group-hover:rotate-1 transition duration-500"></div>
                     <div class="absolute inset-0 border-2 border-otaru-gold/30 rounded-2xl transform -rotate-2 group-hover:-rotate-1 transition duration-500"></div>
                     
                     <div class="relative bg-[#0d2331] rounded-2xl overflow-hidden shadow-2xl aspect-video border border-otaru-gold/50">
-                        <!-- スライドショー画像 (place01.jpg ~ place10.jpg に変更) -->
-                        <img src="images/place01.jpg" alt="Venue Candidate 1" class="venue-slideshow-img" style="animation-delay: 0s;">
-                        <img src="images/place02.jpg" alt="Venue Candidate 2" class="venue-slideshow-img" style="animation-delay: 4s;">
-                        <img src="images/place03.jpg" alt="Venue Candidate 3" class="venue-slideshow-img" style="animation-delay: 8s;">
-                        <img src="images/place04.jpg" alt="Venue Candidate 4" class="venue-slideshow-img" style="animation-delay: 12s;">
-                        <img src="images/place05.jpg" alt="Venue Candidate 5" class="venue-slideshow-img" style="animation-delay: 16s;">
-                        <img src="images/place06.jpg" alt="Venue Candidate 6" class="venue-slideshow-img" style="animation-delay: 20s;">
-                        <img src="images/place07.jpg" alt="Venue Candidate 7" class="venue-slideshow-img" style="animation-delay: 24s;">
-                        <img src="images/place08.jpg" alt="Venue Candidate 8" class="venue-slideshow-img" style="animation-delay: 28s;">
-                        <img src="images/place09.jpg" alt="Venue Candidate 9" class="venue-slideshow-img" style="animation-delay: 32s;">
-                        <img src="images/place10.jpg" alt="Venue Candidate 10" class="venue-slideshow-img" style="animation-delay: 36s;">
-
-                        <!-- PLANNING... の文字は残すかどうか？ -->
-                        <!-- ユーザーの指示には「アニメーションとして」とあるので、画像を見せることが主目的。 -->
-                        <!-- PLANNING... は会場が未定であることを示す重要な要素なので、半透明で残すのが親切か。 -->
-                        <!-- 今回は画像の指示のみなので、PLANNING...も残しつつ、画像が見えるように背景透過を調整するか、あるいは削除するか。 -->
-                        <!-- 元のコードでは opacity-60 とかになっていた。 -->
-                        <!-- 今回は画像自体をスライドショーにするので、PLANNING... は前面に配置しておくのがデザイン的に統一感がある。 -->
+                        <img src="images/place01.jpg" alt="Venue 1" class="venue-slideshow-img" style="animation-delay: 0s;">
+                        <img src="images/place02.jpg" alt="Venue 2" class="venue-slideshow-img" style="animation-delay: 4s;">
+                        <img src="images/place03.jpg" alt="Venue 3" class="venue-slideshow-img" style="animation-delay: 8s;">
+                        <img src="images/place04.jpg" alt="Venue 4" class="venue-slideshow-img" style="animation-delay: 12s;">
+                        <img src="images/place05.jpg" alt="Venue 5" class="venue-slideshow-img" style="animation-delay: 16s;">
+                        <img src="images/place06.jpg" alt="Venue 6" class="venue-slideshow-img" style="animation-delay: 20s;">
+                        <img src="images/place07.jpg" alt="Venue 7" class="venue-slideshow-img" style="animation-delay: 24s;">
+                        <img src="images/place08.jpg" alt="Venue 8" class="venue-slideshow-img" style="animation-delay: 28s;">
+                        <img src="images/place09.jpg" alt="Venue 9" class="venue-slideshow-img" style="animation-delay: 32s;">
+                        <img src="images/place10.jpg" alt="Venue 10" class="venue-slideshow-img" style="animation-delay: 36s;">
                         
                         <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-                            <span class="bg-[#0d2331]/60 text-otaru-gold border border-otaru-gold px-6 py-3 rounded-full font-medieval tracking-widest backdrop-blur-sm shadow-lg">
-                                PLANNING...
-                            </span>
+                            <span class="bg-[#0d2331]/60 text-otaru-gold border border-otaru-gold px-6 py-3 rounded-full font-medieval tracking-widest backdrop-blur-sm shadow-lg">PLANNING...</span>
                         </div>
-                        
-                        <!-- オーバーレイで少し暗くして文字を見やすくする -->
                         <div class="absolute inset-0 bg-[#0d2331]/20 pointer-events-none"></div>
                     </div>
                 </div>
@@ -1025,47 +814,29 @@
     <!-- フッター -->
     <footer class="bg-[#08161f] text-slate-500 py-12 px-6 text-sm border-t border-otaru-gold/20">
         <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-            <!-- Left: Logo & Info -->
             <div class="text-center md:text-left md:w-1/3">
                 <div class="flex items-center justify-center md:justify-start gap-[5pt]">
                     <img src="images/logo.png" alt="STUDIO USHIO" class="h-10 w-auto object-contain drop-shadow-md opacity-90">
                     <span class="text-xs font-medieval tracking-wide text-otaru-gold">1500 × 1500 PROJECT</span>
                 </div>
             </div>
-
-            <!-- Center: DSL Banner & Copyright -->
             <div class="flex flex-col items-center justify-center md:w-1/3">
                 <a href="https://dsl.theshop.jp/" target="_blank" rel="noopener noreferrer" class="block hover:opacity-90 transition transform hover:scale-105 duration-300 group mb-4">
-                    <!-- 画像読み込みエラー時でも枠が表示されるように背景色を追加 -->
                     <img src="images/dsl_banner.png" alt="DSL Shop Banner" class="h-16 md:h-20 w-auto object-contain border border-otaru-gold/40 rounded-lg shadow-[0_0_15px_rgba(212,175,55,0.15)] group-hover:shadow-[0_0_20px_rgba(212,175,55,0.3)] group-hover:border-otaru-gold transition bg-white/10">
                 </a>
-                <!-- 万が一画像が表示されない場合のテキストリンク -->
                 <a href="https://dsl.theshop.jp/" target="_blank" class="text-otaru-gold/80 hover:text-otaru-gold font-zen text-xs mb-2 md:hidden">DSL Online Store</a>
-                
-                <div class="text-xs text-slate-600 whitespace-nowrap">
-                    &copy; 2025 MiLio, LLC. All Rights Reserved.
-                </div>
+                <div class="text-xs text-slate-600 whitespace-nowrap">&copy; 2025 MiLio, LLC. All Rights Reserved.</div>
             </div>
-
-            <!-- Right: Social Links -->
             <div class="flex gap-6 justify-center md:justify-end md:w-1/3">
-                <a href="https://instagram.com/430SANPO" target="_blank" rel="noopener noreferrer" class="hover:text-otaru-gold transition flex items-center gap-2 group">
-                    <i data-lucide="instagram" class="w-4 h-4 group-hover:text-otaru-gold transition"></i>
-                    <span class="font-bold">430SANPO</span>
-                </a>
-                <a href="https://instagram.com/STUDIO_USHIO" target="_blank" rel="noopener noreferrer" class="hover:text-otaru-gold transition flex items-center gap-2 group">
-                    <i data-lucide="instagram" class="w-4 h-4 group-hover:text-otaru-gold transition"></i>
-                    <span class="font-bold">STUDIO_USHIO</span>
-                </a>
+                <a href="https://www.instagram.com/studio_ushio/" target="_blank" rel="noopener noreferrer" class="hover:text-otaru-gold transition flex items-center gap-2 group"><i data-lucide="instagram" class="w-4 h-4 group-hover:text-otaru-gold transition"></i><span class="font-bold">430SANPO</span></a>
+                <a href="https://www.instagram.com/studio_ushio/" target="_blank" rel="noopener noreferrer" class="hover:text-otaru-gold transition flex items-center gap-2 group"><i data-lucide="instagram" class="w-4 h-4 group-hover:text-otaru-gold transition"></i><span class="font-bold">STUDIO_USHIO</span></a>
             </div>
         </div>
     </footer>
 
     <!-- 画像拡大用モーダル -->
     <div id="image-modal" class="fixed inset-0 z-[60] bg-black/90 hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300 backdrop-blur-sm">
-        <button id="modal-close" class="absolute top-6 right-6 text-white hover:text-otaru-gold transition transform hover:scale-110 z-50 bg-black/50 rounded-full p-2">
-            <i data-lucide="x" class="w-8 h-8"></i>
-        </button>
+        <button id="modal-close" class="absolute top-6 right-6 text-white hover:text-otaru-gold transition transform hover:scale-110 z-50 bg-black/50 rounded-full p-2"><i data-lucide="x" class="w-8 h-8"></i></button>
         <div class="relative max-w-5xl w-full h-full flex items-center justify-center p-4">
             <img id="modal-img" src="" alt="Zoomed Image" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl border border-otaru-gold/50 transform scale-95 transition-transform duration-300">
         </div>
@@ -1073,10 +844,7 @@
 
     <!-- JavaScript制御 -->
     <script>
-        // アイコンの初期化
         lucide.createIcons();
-
-        // モバイルメニュー制御
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const menuIcon = document.getElementById('menu-icon');
@@ -1088,17 +856,15 @@
             if (isMenuOpen) {
                 mobileMenu.classList.remove('opacity-0', 'invisible', 'pointer-events-none');
                 mobileMenu.classList.add('opacity-100', 'visible', 'pointer-events-auto');
-                // アイコンをXに変更 (LucideのsetAttributeでは動かないため再生成)
                 menuIcon.setAttribute('data-lucide', 'x');
             } else {
                 mobileMenu.classList.add('opacity-0', 'invisible', 'pointer-events-none');
                 mobileMenu.classList.remove('opacity-100', 'visible', 'pointer-events-auto');
                 menuIcon.setAttribute('data-lucide', 'menu');
             }
-            lucide.createIcons(); // アイコン更新
+            lucide.createIcons();
         });
 
-        // リンククリックでメニューを閉じる
         mobileLinks.forEach(link => {
             link.addEventListener('click', () => {
                 isMenuOpen = false;
@@ -1109,7 +875,6 @@
             });
         });
 
-        // ヘッダーのスクロール制御
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 20) {
@@ -1121,35 +886,27 @@
             }
         });
 
-        // FAQアコーディオン
         const faqToggles = document.querySelectorAll('.faq-toggle');
         faqToggles.forEach(toggle => {
             toggle.addEventListener('click', () => {
                 const content = toggle.nextElementSibling;
-                const icon = toggle.querySelector('i'); // Lucide icon is usually an svg or i tag
-                
                 content.classList.toggle('active');
-                // アイコン回転
                 const svg = toggle.querySelector('svg');
                 if(svg) svg.classList.toggle('rotate-180');
             });
         });
 
-        // 画像モーダル制御
         const modal = document.getElementById('image-modal');
         const modalImg = document.getElementById('modal-img');
         const closeBtn = document.getElementById('modal-close');
         const zoomableImages = document.querySelectorAll('.zoomable-image');
 
-        // 画像クリックで開く
         zoomableImages.forEach(img => {
             img.addEventListener('click', (e) => {
-                e.stopPropagation(); // イベント冒泡防止
+                e.stopPropagation();
                 const src = img.getAttribute('src');
                 modalImg.src = src;
-                
                 modal.classList.remove('hidden');
-                // アニメーション用クラス操作（少し遅延させる）
                 requestAnimationFrame(() => {
                     modal.classList.remove('opacity-0');
                     modalImg.classList.remove('scale-95');
@@ -1158,29 +915,22 @@
             });
         });
 
-        // モーダルを閉じる関数
         const closeModal = () => {
             modal.classList.add('opacity-0');
             modalImg.classList.remove('scale-100');
             modalImg.classList.add('scale-95');
-            
             setTimeout(() => {
                 modal.classList.add('hidden');
                 modalImg.src = '';
-            }, 300); // transitionの時間に合わせる
+            }, 300);
         };
 
-        // 閉じるボタンクリック
         closeBtn.addEventListener('click', closeModal);
-
-        // 背景クリックで閉じる
         modal.addEventListener('click', (e) => {
             if (e.target === modal || e.target.closest('.relative') === e.target) {
                 closeModal();
             }
         });
-
-        // ESCキーで閉じる
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
                 closeModal();

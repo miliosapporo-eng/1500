@@ -797,17 +797,52 @@
                         <div class="flex justify-between pt-1"><dt class="text-otaru-gold text-sm">口座名義</dt><dd class="font-bold tracking-wider">合同会社MiLio</dd></div>
                     </dl>
 
-                    <!-- Square寄付ウィジェット (一時停止中) -->
+                    <!-- Square寄付ウィジェット (有効化) -->
                     <!-- mt-8 を mt-auto に変更して最下部に配置 -->
                     <div class="mt-auto pt-8 border-t border-otaru-gold/20 flex flex-col items-center">
                         <p class="text-otaru-gold font-zen text-sm mb-4 opacity-80">クレジットカードでのご寄付はこちら</p>
                         
                         <div>
-                            <!-- ボタン一時無効化: 準備中表示 -->
-                            <div class="inline-flex items-center gap-3 bg-slate-700/50 text-slate-400 border-2 border-slate-600 px-10 py-4 rounded-xl font-bold relative z-10 font-zen tracking-wide text-lg cursor-not-allowed transition">
-                                <i data-lucide="credit-card" class="w-5 h-5"></i>
-                                準備中
-                            </div>
+                            <!-- ボタン有効化: お問い合わせフォームと同じデザイン -->
+                            <a id="embedded-checkout-modal-checkout-button" target="_blank" data-url="https://square.link/u/o9khguFU?src=embd" href="https://square.link/u/o9khguFU?src=embed" class="inline-flex items-center gap-3 bg-gradient-to-r from-yellow-700 via-yellow-600 to-yellow-800 text-white border-2 border-yellow-400/50 px-10 py-4 rounded-xl font-bold shadow-[0_0_15px_rgba(212,175,55,0.4)] hover:brightness-110 hover:-translate-y-1 transition duration-300 relative z-10 font-zen tracking-wide group text-lg cursor-pointer">
+                                <i data-lucide="credit-card" class="w-5 h-5 group-hover:scale-110 transition"></i>
+                                寄付する
+                            </a>
+                            
+                            <script>
+                                function showCheckoutWindow(e) {
+                                    e.preventDefault();
+                                
+                                    const url = document.getElementById('embedded-checkout-modal-checkout-button').getAttribute('data-url');
+                                    const title = 'Square Payment Links';
+                                
+                                    // Some platforms embed in an iframe, so we want to top window to calculate sizes correctly
+                                    const topWindow = window.top ? window.top : window;
+                                
+                                    // Fixes dual-screen position                                     Most browsers          Firefox
+                                    const dualScreenLeft = topWindow.screenLeft !==  undefined ? topWindow.screenLeft : topWindow.screenX;
+                                    const dualScreenTop = topWindow.screenTop !==  undefined   ? topWindow.screenTop  : topWindow.screenY;
+                                
+                                    const width = topWindow.innerWidth ? topWindow.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+                                    const height = topWindow.innerHeight ? topWindow.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+                                
+                                    const h = height * .75;
+                                    const w = 500;
+                                
+                                    const systemZoom = width / topWindow.screen.availWidth;
+                                    const left = (width - w) / 2 / systemZoom + dualScreenLeft;
+                                    const top = (height - h) / 2 / systemZoom + dualScreenTop;
+                                    const newWindow = window.open(url, title, `scrollbars=yes, width=${w / systemZoom}, height=${h / systemZoom}, top=${top}, left=${left}`);
+                                
+                                    if (window.focus) newWindow.focus();
+                                }
+                                
+                                // This overrides the default checkout button click handler to show the embed modal
+                                // instead of opening a new tab with the given link url
+                                document.getElementById('embedded-checkout-modal-checkout-button').addEventListener('click', function (e) {
+                                    showCheckoutWindow(e);
+                                });
+                            </script>
                         </div>
                     </div>
 

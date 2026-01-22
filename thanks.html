@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THANK YOU | 1500 × 1500 PROJECT</title>
+    
+    <!-- Google Fonts: MedievalSharp, Zen Antique Soft, Orbitron -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Zen+Antique+Soft&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        /* --- フォント設定 --- */
+        body {
+            font-family: 'Zen Antique Soft', serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .font-medieval {
+            font-family: 'MedievalSharp', cursive;
+            letter-spacing: 0.05em;
+        }
+        .font-zen {
+            font-family: 'Zen Antique Soft', serif;
+            letter-spacing: 0.05em;
+            font-weight: 700;
+        }
+        .font-futuristic {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 0.05em;
+            font-weight: 900;
+        }
+
+        /* --- カラー設定 --- */
+        .bg-otaru-dark { background-color: #0d2331; }
+        .bg-otaru-main { background: linear-gradient(160deg, #103b4a 0%, #0d2331 100%); }
+        .text-otaru-gold { color: #d4af37; }
+        .border-otaru-gold { border-color: #d4af37; }
+
+        /* --- 背景装飾 (Kintsugi Effect) --- */
+        .kintsugi-bg {
+            position: relative;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        .kintsugi-bg::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='400' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 50 Q 50 40 100 60 T 200 40 T 300 80 T 400 50 M 50 0 Q 60 50 40 100 T 80 200 T 50 300 T 90 400' stroke='rgba(212, 175, 55, 0.15)' stroke-width='1.5' fill='none'/%3E%3Cpath d='M200 0 Q 210 80 190 150 T 230 250 T 200 400' stroke='rgba(212, 175, 55, 0.1)' stroke-width='1' fill='none'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* --- アニメーション --- */
+        @keyframes shine {
+            0% { background-position: -100% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .gold-shine {
+            position: relative;
+            overflow: hidden;
+        }
+        .gold-shine::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, transparent 0%, rgba(255, 215, 0, 0.4) 50%, transparent 100%);
+            animation: shine 3s infinite;
+        }
+    </style>
+</head>
+<body class="bg-otaru-dark text-slate-200 selection:bg-yellow-600 selection:text-white kintsugi-bg flex flex-col min-h-screen">
+
+    <!-- 金継ぎラインオーバーレイ (固定背景) -->
+    <div class="fixed inset-0 pointer-events-none z-0 opacity-40 mix-blend-overlay">
+        <svg width="100%" height="100%" preserveAspectRatio="none">
+            <path d="M0,100 Q300,150 500,50 T1000,200 T1500,100" stroke="#d4af37" stroke-width="0.5" fill="none" />
+            <path d="M200,0 Q250,300 150,500 T300,1000" stroke="#d4af37" stroke-width="0.5" fill="none" />
+        </svg>
+    </div>
+
+    <!-- シンプルナビゲーション (Logoのみ) -->
+    <nav class="w-full z-50 py-5 bg-gradient-to-b from-[#0d2331] to-transparent relative">
+        <div class="container mx-auto px-6 flex justify-center md:justify-start">
+            <a href="index.html" class="group flex items-center gap-[5pt]">
+                <!-- 画像パスは元のまま維持しています -->
+                <img src="images/logo.png" alt="STUDIO USHIO" class="h-12 w-auto object-contain drop-shadow-[0_0_5px_rgba(212,175,55,0.5)] group-hover:brightness-110 transition duration-300">
+                <span class="text-xs font-medieval tracking-wide text-otaru-gold group-hover:text-white transition duration-300">1500 × 1500 PROJECT</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- メインコンテンツ -->
+    <main class="flex-grow flex items-center justify-center relative px-6 py-12">
+        <div class="container mx-auto max-w-3xl relative z-10 text-center">
+            
+            <!-- Thanks Icon -->
+            <div class="mb-8 inline-flex items-center justify-center p-6 rounded-full bg-[#103b4a]/50 border border-otaru-gold/50 shadow-[0_0_30px_rgba(212,175,55,0.2)]">
+                <i data-lucide="check" class="w-12 h-12 text-otaru-gold animate-pulse"></i>
+            </div>
+
+            <h1 class="text-5xl md:text-7xl font-medieval text-white mb-6 tracking-wide drop-shadow-[0_2px_0_#d4af37]">
+                THANK YOU
+            </h1>
+            
+            <p class="text-xl md:text-2xl text-otaru-gold font-zen font-bold mb-8">
+                決済が完了しました
+            </p>
+
+            <div class="bg-[#103b4a]/60 backdrop-blur-sm p-8 md:p-12 rounded-3xl border border-otaru-gold/30 shadow-2xl leading-loose text-slate-300 relative overflow-hidden mb-12">
+                <div class="absolute top-0 right-0 w-20 h-20 border-t-2 border-r-2 border-otaru-gold rounded-tr-3xl opacity-50"></div>
+                <div class="absolute bottom-0 left-0 w-20 h-20 border-b-2 border-l-2 border-otaru-gold rounded-bl-3xl opacity-50"></div>
+
+                <p class="mb-6 font-zen">
+                    1500 × 1500 PROJECTにご参加いただき、<br class="hidden md:inline">誠にありがとうございます。<br>
+                    ご登録のメールアドレスへ、注文確認メールを送信いたしました。
+                </p>
+                <p class="font-zen text-sm opacity-80">
+                    ※万が一メールが届かない場合は、迷惑メールフォルダをご確認いただくか、<br>
+                    InstagramのDM等よりお問い合わせください。
+                </p>
+            </div>
+
+            <!-- アンケートセクション (強調表示) -->
+            <div class="relative py-10">
+                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl h-full bg-[#103b4a]/20 blur-3xl rounded-full -z-10"></div>
+                
+                <h2 class="text-white font-zen text-lg mb-6 flex items-center justify-center gap-2">
+                    <i data-lucide="clipboard-list" class="text-otaru-gold"></i>
+                    <span>最後に、以下のアンケートへご回答をお願いします</span>
+                </h2>
+
+                <a href="entry.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 bg-gradient-to-r from-yellow-700 via-yellow-600 to-yellow-800 text-white border-2 border-yellow-400/50 px-12 py-5 rounded-full text-xl font-bold shadow-[0_0_25px_rgba(212,175,55,0.5)] hover:brightness-110 hover:-translate-y-1 transition duration-300 font-zen tracking-wide gold-shine group relative z-10 w-full md:w-auto justify-center">
+                    <i data-lucide="clipboard-check" class="w-6 h-6 text-yellow-200"></i>
+                    アンケートはコチラ
+                    <i data-lucide="external-link" class="w-5 h-5 ml-1 opacity-80 group-hover:translate-x-1 transition"></i>
+                </a>
+
+                <p class="mt-6 text-slate-400 text-sm font-zen">
+                    撮影日時や場所の調整、お写真の共有方法などについて<br>
+                    アンケートをもとにご連絡させていただきます。
+                </p>
+            </div>
+
+            <!-- Back Link -->
+            <div class="mt-16 border-t border-otaru-gold/20 pt-8">
+                <a href="index.html" class="text-slate-400 hover:text-otaru-gold transition font-zen text-sm inline-flex items-center gap-2">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> トップページへ戻る
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- フッター -->
+    <footer class="bg-[#08161f] text-slate-500 py-8 px-6 text-sm border-t border-otaru-gold/20 relative z-10">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-[5pt]">
+                <img src="images/logo.png" alt="STUDIO USHIO" class="h-8 w-auto object-contain opacity-70">
+                <span class="text-xs font-medieval tracking-wide text-otaru-gold/70">1500 × 1500 PROJECT</span>
+            </div>
+            <div class="text-xs text-slate-600 whitespace-nowrap">
+                &copy; 2025 MiLio, LLC. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script -->
+    <script>
+        // アイコン初期化
+        lucide.createIcons();
+    </script>
+</body>
+</html>
